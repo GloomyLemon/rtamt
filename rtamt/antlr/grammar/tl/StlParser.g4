@@ -3,6 +3,7 @@ import LtlParser;
 
 options {
 	tokenVocab = LtlLexer ;
+	language = Python3 ;
 }
 
 interval
@@ -23,15 +24,16 @@ expression
 	| SQRT LPAREN expression RPAREN                             #ExprSqrt
 	| EXP LPAREN expression RPAREN                              #ExprExp
 	| POW LPAREN expression COMMA expression RPAREN             #ExprPow
+	| LOG LPAREN expression COMMA expression RPAREN             #ExprLog
+	| LN LPAREN expression RPAREN                               #ExprLn
 
-    | expression TIMES expression                               #ExprMultiplication
-	| expression DIVIDE expression                              #ExprDivision
-	| expression PLUS expression                                #ExprAddition
-	| expression MINUS expression                               #ExprSubtraction
+    | expression multdivOp expression                           #ExprMultDiv
+	| expression addsubOp expression                            #ExprAddSub
 
 	| expression comparisonOp expression                        #ExprPredicate
 
 	| NotOperator expression                                    #ExprNot
+	| MINUS expression                                          #ExprNegate
 
 	| AlwaysOperator ( interval )? expression                   #ExprAlways
     | EventuallyOperator ( interval )? expression               #ExprEv
