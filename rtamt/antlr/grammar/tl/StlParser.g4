@@ -19,6 +19,7 @@ unit
 expression
 	:
 	LPAREN expression RPAREN                                    #ExprParen
+	| MINUS expression                                          #ExprNegate
 
 	| ABS LPAREN expression RPAREN                              #ExprAbs
 	| SQRT LPAREN expression RPAREN                             #ExprSqrt
@@ -33,7 +34,6 @@ expression
 	| expression comparisonOp expression                        #ExprPredicate
 
 	| NotOperator expression                                    #ExprNot
-	| MINUS expression                                          #ExprNegate
 
 	| AlwaysOperator ( interval )? expression                   #ExprAlways
     | EventuallyOperator ( interval )? expression               #ExprEv

@@ -48,14 +48,14 @@ def serializedATN():
         buf.write(";\3\2\2\2\668\7K\2\2\679\5\6\4\28\67\3\2\2\289\3\2\2\2")
         buf.write("9;\3\2\2\2:\62\3\2\2\2:\66\3\2\2\2;\5\3\2\2\2<=\t\3\2")
         buf.write("\2=\7\3\2\2\2>?\b\5\1\2?@\7\7\2\2@A\5\b\5\2AB\7\b\2\2")
-        buf.write("B\u0092\3\2\2\2CD\7\22\2\2DE\7\7\2\2EF\5\b\5\2FG\7\b\2")
-        buf.write("\2G\u0092\3\2\2\2HI\7\23\2\2IJ\7\7\2\2JK\5\b\5\2KL\7\b")
-        buf.write("\2\2L\u0092\3\2\2\2MN\7\24\2\2NO\7\7\2\2OP\5\b\5\2PQ\7")
-        buf.write("\b\2\2Q\u0092\3\2\2\2RS\7\25\2\2ST\7\7\2\2TU\5\b\5\2U")
-        buf.write("V\7\17\2\2VW\5\b\5\2WX\7\b\2\2X\u0092\3\2\2\2YZ\7\26\2")
-        buf.write("\2Z[\7\7\2\2[\\\5\b\5\2\\]\7\17\2\2]^\5\b\5\2^_\7\b\2")
-        buf.write("\2_\u0092\3\2\2\2`a\7\27\2\2ab\7\7\2\2bc\5\b\5\2cd\7\b")
-        buf.write("\2\2d\u0092\3\2\2\2ef\7,\2\2f\u0092\5\b\5\30gh\7\3\2\2")
+        buf.write("B\u0092\3\2\2\2CD\7\3\2\2D\u0092\5\b\5!EF\7\22\2\2FG\7")
+        buf.write("\7\2\2GH\5\b\5\2HI\7\b\2\2I\u0092\3\2\2\2JK\7\23\2\2K")
+        buf.write("L\7\7\2\2LM\5\b\5\2MN\7\b\2\2N\u0092\3\2\2\2OP\7\24\2")
+        buf.write("\2PQ\7\7\2\2QR\5\b\5\2RS\7\b\2\2S\u0092\3\2\2\2TU\7\25")
+        buf.write("\2\2UV\7\7\2\2VW\5\b\5\2WX\7\17\2\2XY\5\b\5\2YZ\7\b\2")
+        buf.write("\2Z\u0092\3\2\2\2[\\\7\26\2\2\\]\7\7\2\2]^\5\b\5\2^_\7")
+        buf.write("\17\2\2_`\5\b\5\2`a\7\b\2\2a\u0092\3\2\2\2bc\7\27\2\2")
+        buf.write("cd\7\7\2\2de\5\b\5\2ef\7\b\2\2f\u0092\3\2\2\2gh\7,\2\2")
         buf.write("h\u0092\5\b\5\27ik\7\64\2\2jl\5\2\2\2kj\3\2\2\2kl\3\2")
         buf.write("\2\2lm\3\2\2\2m\u0092\5\b\5\26np\7\65\2\2oq\5\2\2\2po")
         buf.write("\3\2\2\2pq\3\2\2\2qr\3\2\2\2r\u0092\5\b\5\25su\78\2\2")
@@ -69,17 +69,17 @@ def serializedATN():
         buf.write("\7\63\2\2\u008b\u008c\7\7\2\2\u008c\u008d\5\b\5\2\u008d")
         buf.write("\u008e\7\b\2\2\u008e\u0092\3\2\2\2\u008f\u0092\7K\2\2")
         buf.write("\u0090\u0092\5*\26\2\u0091>\3\2\2\2\u0091C\3\2\2\2\u0091")
-        buf.write("H\3\2\2\2\u0091M\3\2\2\2\u0091R\3\2\2\2\u0091Y\3\2\2\2")
-        buf.write("\u0091`\3\2\2\2\u0091e\3\2\2\2\u0091g\3\2\2\2\u0091i\3")
+        buf.write("E\3\2\2\2\u0091J\3\2\2\2\u0091O\3\2\2\2\u0091T\3\2\2\2")
+        buf.write("\u0091[\3\2\2\2\u0091b\3\2\2\2\u0091g\3\2\2\2\u0091i\3")
         buf.write("\2\2\2\u0091n\3\2\2\2\u0091s\3\2\2\2\u0091x\3\2\2\2\u0091")
         buf.write("}\3\2\2\2\u0091\177\3\2\2\2\u0091\u0081\3\2\2\2\u0091")
         buf.write("\u0083\3\2\2\2\u0091\u0085\3\2\2\2\u0091\u008a\3\2\2\2")
         buf.write("\u0091\u008f\3\2\2\2\u0091\u0090\3\2\2\2\u0092\u00c2\3")
-        buf.write("\2\2\2\u0093\u0094\f\33\2\2\u0094\u0095\5$\23\2\u0095")
-        buf.write("\u0096\5\b\5\34\u0096\u00c1\3\2\2\2\u0097\u0098\f\32\2")
-        buf.write("\2\u0098\u0099\5&\24\2\u0099\u009a\5\b\5\33\u009a\u00c1")
-        buf.write("\3\2\2\2\u009b\u009c\f\31\2\2\u009c\u009d\5(\25\2\u009d")
-        buf.write("\u009e\5\b\5\32\u009e\u00c1\3\2\2\2\u009f\u00a0\f\16\2")
+        buf.write("\2\2\2\u0093\u0094\f\32\2\2\u0094\u0095\5$\23\2\u0095")
+        buf.write("\u0096\5\b\5\33\u0096\u00c1\3\2\2\2\u0097\u0098\f\31\2")
+        buf.write("\2\u0098\u0099\5&\24\2\u0099\u009a\5\b\5\32\u009a\u00c1")
+        buf.write("\3\2\2\2\u009b\u009c\f\30\2\2\u009c\u009d\5(\25\2\u009d")
+        buf.write("\u009e\5\b\5\31\u009e\u00c1\3\2\2\2\u009f\u00a0\f\16\2")
         buf.write("\2\u00a0\u00a2\7\66\2\2\u00a1\u00a3\5\2\2\2\u00a2\u00a1")
         buf.write("\3\2\2\2\u00a2\u00a3\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4")
         buf.write("\u00c1\5\b\5\17\u00a5\u00a6\f\r\2\2\u00a6\u00a8\7\67\2")
@@ -1564,107 +1564,107 @@ class StlParser ( Parser ):
                 self.state = 63
                 self.match(StlParser.RPAREN)
                 pass
+            elif token in [StlParser.MINUS]:
+                localctx = StlParser.ExprNegateContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 65
+                self.match(StlParser.MINUS)
+                self.state = 66
+                self.expression(31)
+                pass
             elif token in [StlParser.ABS]:
                 localctx = StlParser.ExprAbsContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 65
-                self.match(StlParser.ABS)
-                self.state = 66
-                self.match(StlParser.LPAREN)
                 self.state = 67
-                self.expression(0)
+                self.match(StlParser.ABS)
                 self.state = 68
+                self.match(StlParser.LPAREN)
+                self.state = 69
+                self.expression(0)
+                self.state = 70
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.SQRT]:
                 localctx = StlParser.ExprSqrtContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 70
-                self.match(StlParser.SQRT)
-                self.state = 71
-                self.match(StlParser.LPAREN)
                 self.state = 72
-                self.expression(0)
+                self.match(StlParser.SQRT)
                 self.state = 73
+                self.match(StlParser.LPAREN)
+                self.state = 74
+                self.expression(0)
+                self.state = 75
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.EXP]:
                 localctx = StlParser.ExprExpContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 75
-                self.match(StlParser.EXP)
-                self.state = 76
-                self.match(StlParser.LPAREN)
                 self.state = 77
-                self.expression(0)
+                self.match(StlParser.EXP)
                 self.state = 78
+                self.match(StlParser.LPAREN)
+                self.state = 79
+                self.expression(0)
+                self.state = 80
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.POW]:
                 localctx = StlParser.ExprPowContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 80
-                self.match(StlParser.POW)
-                self.state = 81
-                self.match(StlParser.LPAREN)
                 self.state = 82
-                self.expression(0)
+                self.match(StlParser.POW)
                 self.state = 83
-                self.match(StlParser.COMMA)
+                self.match(StlParser.LPAREN)
                 self.state = 84
                 self.expression(0)
                 self.state = 85
+                self.match(StlParser.COMMA)
+                self.state = 86
+                self.expression(0)
+                self.state = 87
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.LOG]:
                 localctx = StlParser.ExprLogContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 87
-                self.match(StlParser.LOG)
-                self.state = 88
-                self.match(StlParser.LPAREN)
                 self.state = 89
-                self.expression(0)
+                self.match(StlParser.LOG)
                 self.state = 90
-                self.match(StlParser.COMMA)
+                self.match(StlParser.LPAREN)
                 self.state = 91
                 self.expression(0)
                 self.state = 92
+                self.match(StlParser.COMMA)
+                self.state = 93
+                self.expression(0)
+                self.state = 94
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.LN]:
                 localctx = StlParser.ExprLnContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 94
-                self.match(StlParser.LN)
-                self.state = 95
-                self.match(StlParser.LPAREN)
                 self.state = 96
-                self.expression(0)
+                self.match(StlParser.LN)
                 self.state = 97
+                self.match(StlParser.LPAREN)
+                self.state = 98
+                self.expression(0)
+                self.state = 99
                 self.match(StlParser.RPAREN)
                 pass
             elif token in [StlParser.NotOperator]:
                 localctx = StlParser.ExprNotContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 99
-                self.match(StlParser.NotOperator)
-                self.state = 100
-                self.expression(22)
-                pass
-            elif token in [StlParser.MINUS]:
-                localctx = StlParser.ExprNegateContext(self, localctx)
-                self._ctx = localctx
-                _prevctx = localctx
                 self.state = 101
-                self.match(StlParser.MINUS)
+                self.match(StlParser.NotOperator)
                 self.state = 102
                 self.expression(21)
                 pass
@@ -1831,39 +1831,39 @@ class StlParser ( Parser ):
                         localctx = StlParser.ExprMultDivContext(self, StlParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 145
-                        if not self.precpred(self._ctx, 25):
+                        if not self.precpred(self._ctx, 24):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 25)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 24)")
                         self.state = 146
                         self.multdivOp()
                         self.state = 147
-                        self.expression(26)
+                        self.expression(25)
                         pass
 
                     elif la_ == 2:
                         localctx = StlParser.ExprAddSubContext(self, StlParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 149
-                        if not self.precpred(self._ctx, 24):
+                        if not self.precpred(self._ctx, 23):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 24)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 23)")
                         self.state = 150
                         self.addsubOp()
                         self.state = 151
-                        self.expression(25)
+                        self.expression(24)
                         pass
 
                     elif la_ == 3:
                         localctx = StlParser.ExprPredicateContext(self, StlParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 153
-                        if not self.precpred(self._ctx, 23):
+                        if not self.precpred(self._ctx, 22):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 23)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 22)")
                         self.state = 154
                         self.comparisonOp()
                         self.state = 155
-                        self.expression(24)
+                        self.expression(23)
                         pass
 
                     elif la_ == 4:
@@ -3471,15 +3471,15 @@ class StlParser ( Parser ):
 
     def expression_sempred(self, localctx:ExpressionContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 25)
-         
-
-            if predIndex == 1:
                 return self.precpred(self._ctx, 24)
          
 
-            if predIndex == 2:
+            if predIndex == 1:
                 return self.precpred(self._ctx, 23)
+         
+
+            if predIndex == 2:
+                return self.precpred(self._ctx, 22)
          
 
             if predIndex == 3:
