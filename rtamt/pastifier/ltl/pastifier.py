@@ -20,8 +20,8 @@ from rtamt.syntax.node.arithmetic.abs import Abs
 from rtamt.syntax.node.arithmetic.sqrt import Sqrt
 from rtamt.syntax.node.arithmetic.exp import Exp
 from rtamt.syntax.node.arithmetic.pow import Pow
-from rtamt.syntax.node.arithmetic.loh import Log
-from rtamt.syntax.node.arithmetic.nl import Ln
+from rtamt.syntax.node.arithmetic.log import Log
+from rtamt.syntax.node.arithmetic.ln import Ln
 from rtamt.syntax.node.arithmetic.negate import Negate
 from rtamt.syntax.node.ltl.fall import Fall
 from rtamt.syntax.node.ltl.rise import Rise
