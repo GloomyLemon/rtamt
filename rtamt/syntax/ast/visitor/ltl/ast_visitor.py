@@ -86,7 +86,9 @@ class LtlAstVisitor(AbstractAstVisitor):
         elif isinstance(node, Negate):
             result = self.visitNegate(node, *args, **kwargs)
         elif isinstance(node, Multiplication):
-            result = self.visitMultDiv(node, *args, **kwargs)
+            result = self.visitMultiplication(node, *args, **kwargs)
+        elif isinstance(node, Division):
+            result = self.visitDivision(node, *args, **kwargs)
         elif isinstance(node, Rise):
             result = self.visitRise(node, *args, **kwargs)
         elif isinstance(node, Fall):
@@ -141,7 +143,10 @@ class LtlAstVisitor(AbstractAstVisitor):
     def visitNegate(self, node, *args, **kwargs):
         return self.visitChildren(node, *args, **kwargs)
 
-    def visitMultDiv(self, node, *args, **kwargs):
+    def visitMultiplication(self, node, *args, **kwargs):
+        return self.visitChildren(node, *args, **kwargs)
+
+    def visitDivision(self, node, *args, **kwargs):
         return self.visitChildren(node, *args, **kwargs)
 
     def visitNot(self, node, *args, **kwargs):
