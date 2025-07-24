@@ -53,6 +53,13 @@ class LtlHorizon(LtlAstVisitor):
         self.horizons[node] = out
         return out
 
+    def visitLog(self, node, *args, **kwargs):
+        op1_horizon = self.visit(node.children[0], *args, **kwargs)
+        op2_horizon = self.visit(node.children[1], *args, **kwargs)
+        out = max(op1_horizon, op2_horizon)
+        self.horizons[node] = out
+        return out
+
     def visitAbs(self, node, *args, **kwargs):
         op_horizon = self.visit(node.children[0], *args, **kwargs)
         self.horizons[node] = op_horizon
@@ -64,6 +71,16 @@ class LtlHorizon(LtlAstVisitor):
         return op_horizon
 
     def visitExp(self, node, *args, **kwargs):
+        op_horizon = self.visit(node.children[0], *args, **kwargs)
+        self.horizons[node] = op_horizon
+        return op_horizon
+
+    def visitLn(self, node, *args, **kwargs):
+        op_horizon = self.visit(node.children[0], *args, **kwargs)
+        self.horizons[node] = op_horizon
+        return op_horizon
+
+    def visitNegate(self, node, *args, **kwargs):
         op_horizon = self.visit(node.children[0], *args, **kwargs)
         self.horizons[node] = op_horizon
         return op_horizon

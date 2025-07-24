@@ -20,6 +20,9 @@ from rtamt.syntax.node.arithmetic.abs import Abs
 from rtamt.syntax.node.arithmetic.sqrt import Sqrt
 from rtamt.syntax.node.arithmetic.exp import Exp
 from rtamt.syntax.node.arithmetic.pow import Pow
+from rtamt.syntax.node.arithmetic.loh import Log
+from rtamt.syntax.node.arithmetic.nl import Ln
+from rtamt.syntax.node.arithmetic.negate import Negate
 from rtamt.syntax.node.ltl.fall import Fall
 from rtamt.syntax.node.ltl.rise import Rise
 from rtamt.syntax.node.ltl.constant import Constant
@@ -115,6 +118,17 @@ class LtlPastifier(LtlAstVisitor):
             node = Previous(node)
         return node
 
+    def visitLog(self, node, *args, **kwargs):
+        node_horizon = self.subformula_horizons[node]
+        remaining_horizon = args[0]
+        horizon = remaining_horizon - node_horizon
+        child1_node = self.visit(node.children[0], node_horizon)
+        child2_node = self.visit(node.children[1], node_horizon)
+        node = Log(child1_node, child2_node)
+        for i in range(horizon):
+            node = Previous(node)
+        return node
+
     def visitAbs(self, node, *args, **kwargs):
         node_horizon = self.subformula_horizons[node]
         remaining_horizon = args[0]
@@ -141,6 +155,26 @@ class LtlPastifier(LtlAstVisitor):
         horizon = remaining_horizon - node_horizon
         child_node = self.visit(node.children[0], node_horizon)
         node = Exp(child_node)
+        for i in range(horizon):
+            node = Previous(node)
+        return node
+
+    def visitLn(self, node, *args, **kwargs):
+        node_horizon = self.subformula_horizons[node]
+        remaining_horizon = args[0]
+        horizon = remaining_horizon - node_horizon
+        child_node = self.visit(node.children[0], node_horizon)
+        node = Ln(child_node)
+        for i in range(horizon):
+            node = Previous(node)
+        return node
+
+    def visitNegate(self, node, *args, **kwargs):
+        node_horizon = self.subformula_horizons[node]
+        remaining_horizon = args[0]
+        horizon = remaining_horizon - node_horizon
+        child_node = self.visit(node.children[0], node_horizon)
+        node = Negate(child_node)
         for i in range(horizon):
             node = Previous(node)
         return node
