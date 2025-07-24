@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import sys
 import rtamt
 
@@ -38,6 +37,4 @@ def monitor():
     print('d: ' + str(d))
 
 if __name__ == '__main__':
-    # Process arguments
-
     monitor()

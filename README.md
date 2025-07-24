@@ -20,8 +20,9 @@
   - [Dense-time Offline Monitor](#dense-time-offline-monitor)
   - [Discrete-time Specifics](#discrete-time-specifics)
     - [Working with time units and timing assumptions](#working-with-time-units-and-timing-assumptions)
-- [Features]
-  - [Accessing evaluation of sub-formulas]
+- [Features](#features)
+  - [Accessing evaluation of sub-formulas](#accessing-evaluation-of-sub-formulas)
+  - [Printing formulas](#printing-formulas)
 - [References](#references)
 
 <!-- markdown-toc end -->
@@ -136,7 +137,9 @@ for Python 3
 sudo pip3 uninstall rtamt
 ```
 
-## test RTAMT
+## Testing RTAMT
+
+For running all tests (Python and C++) tests.
 
 for Python 2
 
@@ -150,6 +153,22 @@ for Python 3
 ```bash
 cd rtamt/
 python3 -m unittest discover tests/
+```
+
+For running only Python tests.
+
+for Python 2
+
+```bash
+cd rtamt/
+python2 -m unittest discover tests/python
+```
+
+for Python 3
+
+```bash
+cd rtamt/
+python3 -m unittest discover tests/python
 ```
 
 # Theory
@@ -280,7 +299,7 @@ def monitor():
     spec = rtamt.StlDiscreteTimeSpecification()
     spec.declare_var('a', 'float')
     spec.declare_var('b', 'float')
-    spec.spec = 'eventually[0,1] (a >= b)'
+    spec.spec = 'eventually[0,1] (a >= b);'
 
     try:
         spec.parse()
@@ -360,7 +379,7 @@ def monitor():
     spec.declare_var('out', 'float')
     spec.set_var_io_type('req', 'input')
     spec.set_var_io_type('gnt', 'output')
-    spec.spec = 'out = always((req>=3) implies (eventually[0:5](gnt>=3)))'
+    spec.spec = 'out = always((req>=3) implies (eventually[0:5](gnt>=3)));'
     try:
         spec.parse()
     except rtamt.RTAMTException as err:
@@ -401,7 +420,7 @@ def monitor():
     spec.declare_var('gnt', 'float')
     spec.declare_var('out', 'float')
 
-    spec.spec = 'out = (req>=3) implies (eventually[0:5](gnt>=3))'
+    spec.spec = 'out = (req>=3) implies (eventually[0:5](gnt>=3));'
 
     try:
         spec.parse()
@@ -464,7 +483,7 @@ The user can also explicitly set the default unit, as well as the expected perio
     spec.unit = 's'
     spec.set_sampling_period(500, 'ms', 0.1)
     ...
-    spec.spec = 'out = (req>=3) implies (eventually[0.5:1.5](gnt>=3))'
+    spec.spec = 'out = (req>=3) implies (eventually[0.5:1.5](gnt>=3));'
     ...
     spec.update(0, [('req', 0.1), ('gnt', 0.3)])
     spec.update(0.5, [('req', 0.45), ('gnt', 0.12)])
@@ -481,7 +500,7 @@ The following defines the same program, but now with `ms` as the default unit.
     spec.unit = 'ms'
     spec.set_sampling_period(500, 'ms', 0.1)
     ...
-    spec.spec = 'out = (req>=3) implies (eventually[500:1500](gnt>=3))'
+    spec.spec = 'out = (req>=3) implies (eventually[500:1500](gnt>=3));'
     ...
     spec.update(0, [('req', 0.1), ('gnt', 0.3)])
     spec.update(500, [('req', 0.45), ('gnt', 0.12)])
@@ -498,7 +517,7 @@ The following program throws an exception - the temporal bound is defined betwee
     spec.unit = 'ms'
     spec.set_sampling_period(1, 's', 0.1)
     ...
-    spec.spec = 'out = always((req>=3) implies (eventually[500:1500](gnt>=3)))'
+    spec.spec = 'out = always((req>=3) implies (eventually[500:1500](gnt>=3)));'
     ...
     spec.parse()
     ...
@@ -514,7 +533,7 @@ Finally, the following program is correct, because the temporal bound is explici
     spec.unit = 'ms'
     spec.set_sampling_period(1, 's', 0.1)
     ...
-    spec.spec = 'out = always((req>=3) implies (eventually[500s:1500s](gnt>=3)))'
+    spec.spec = 'out = always((req>=3) implies (eventually[500s:1500s](gnt>=3)));'
     ...
     spec.parse()
     ...
@@ -544,8 +563,8 @@ def monitor():
     spec.declare_var('b', 'float')
     spec.declare_var('c', 'float')
     spec.declare_var('d', 'float')
-    spec.add_sub_spec('c = a + b')
-    spec.spec = 'd = c >= - 2'
+    spec.add_sub_spec('c = a + b;')
+    spec.spec = 'd = c >= - 2;'
 
     try:
         spec.parse()
@@ -564,6 +583,44 @@ def monitor():
     print('c: ' + str(c))
     print('d: ' + str(d))
 
+```
+The output is:
+```bash
+a: [100.0, -1.0, -2.0]
+b: [20.0, 2.0, 10.0]
+c: [120.0, 1.0, 8.0]
+d: [122.0, 3.0, 10.0]
+```
+
+## Printing formulas
+
+Online monitoring requires automatically translating bounded-future STL formulas into their equisatisfiable past STL counterparts. The user may want to see the translated formula, to understand better the semantics and debug the monitor. For this, we provide the `spec_print()` method. An example of using it is shown below:
+
+```python
+import sys
+import rtamt
+
+spec = rtamt.StlDiscreteTimeSpecification()
+spec.declare_var('a', 'float')
+spec.declare_var('b', 'float')
+spec.spec = 'eventually[0,1] (a >= b)'
+
+try:
+    spec.parse()
+    print("Before pastification: " + spec.spec_print())
+
+    spec.pastify()
+    print("After pastification: " + spec.spec_print())
+except rtamt.RTAMTException as err:
+    print('RTAMT Exception: {}'.format(err))
+    sys.exit()
+```
+
+The output of the method is shown here.
+
+```bash
+Before pastification: eventually[0,1]((a)>=(b))
+After pastification: once[0,1]((a)>=(b))
 ```
 
 # References
