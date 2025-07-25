@@ -9,9 +9,9 @@ from rtamt.semantics.arithmetic.dense_time.online.abs_operation import AbsOperat
 from rtamt.semantics.arithmetic.dense_time.online.sqrt_operation import SqrtOperation
 from rtamt.semantics.arithmetic.dense_time.online.pow_operation import PowOperation
 from rtamt.semantics.arithmetic.dense_time.online.exp_operation import ExpOperation
-from rtamt.semantics.arithmetic.discrete_time.online.negate_operation import NegateOperation
-from rtamt.semantics.arithmetic.discrete_time.online.log_operation import LogOperation
-from rtamt.semantics.arithmetic.discrete_time.online.ln_operation import LnOperation
+from rtamt.semantics.arithmetic.dense_time.online.negate_operation import NegateOperation
+from rtamt.semantics.arithmetic.dense_time.online.log_operation import LogOperation
+from rtamt.semantics.arithmetic.dense_time.online.ln_operation import LnOperation
 
 from rtamt.semantics.stl.dense_time.online.predicate_operation import PredicateOperation
 from rtamt.semantics.stl.dense_time.online.and_operation import AndOperation
