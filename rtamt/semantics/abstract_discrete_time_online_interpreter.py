@@ -1,5 +1,6 @@
 import operator
 
+from rtamt.semantics.stl.dense_time.online.variable_operation import VariableOperation
 from rtamt.syntax.ast.visitor.abstract_ast_visitor import AbstractAstVisitor
 from rtamt.semantics.abstract_online_interpreter import AbstractOnlineInterpreter, AbstractOnlineUpdateVisitor, AbstractOnlineResetVisitor
 from rtamt.semantics.discrete_time_interpreter import DiscreteTimeInterpreter

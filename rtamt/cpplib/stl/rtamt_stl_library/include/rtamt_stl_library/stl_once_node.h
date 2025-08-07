@@ -18,4 +18,4 @@ class StlOnceNode {
 } // namespace stl_library
 
 #endif /* STL_ONCE_NODE_H */
-
+ 

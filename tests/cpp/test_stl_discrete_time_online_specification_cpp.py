@@ -2,6 +2,8 @@ import unittest
 import math
 import rtamt
 
+rtamt.load_dlls.init_dlls()
+
 class TestStlDenseTimeOnlineSpecificationCpp(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
@@ -463,6 +465,7 @@ class TestStlDenseTimeOnlineSpecificationCpp(unittest.TestCase):
         spec = rtamt.StlDiscreteTimeOnlineSpecificationCpp()
         spec.declare_var('req', 'float')
         spec.declare_var('out', 'float')
+
         spec.spec = 'out = eventually[0,1](req)'
 
         spec.parse()

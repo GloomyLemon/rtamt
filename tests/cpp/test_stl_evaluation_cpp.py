@@ -1,4 +1,9 @@
 import unittest
+from rtamt.lib.rtamt_stl_library_wrapper.load_dlls import init_dlls
+
+# this loads some of the required dll's that aren't found otherwise
+init_dlls()
+
 from rtamt.lib.rtamt_stl_library_wrapper.stl_constant_node import ConstantOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_comp_op import StlComparisonOperator
 from rtamt.lib.rtamt_stl_library_wrapper.stl_addition_node import AdditionOperation
@@ -29,6 +34,7 @@ class TestSTLEvaluationCPP(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super(TestSTLEvaluationCPP, self).__init__(*args, **kwargs)
+
         self.left1 = 100
         self.right1 = 20
 

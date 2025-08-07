@@ -1,0 +1,102 @@
+cmake_minimum_required(VERSION 3.12)
+project(rtamt_stl_semantics)
+
+## Declare a C++ library
+add_library(${PROJECT_NAME}
+	STATIC
+		abstract_discrete_time_online_interpreter.hpp
+		abstract_discrete_time_online_interpreter.cpp
+		abstract_interpreter.hpp
+		abstract_interpreter.cpp
+		abstract_online_interpreter.hpp
+		abstract_online_interpreter.cpp
+		abstract_online_operation.hpp
+		abstract_online_operation.cpp
+		discrete_time_interpreter.hpp
+		discrete_time_interpreter.cpp
+		sample.hpp
+		sample.cpp
+		time_interpreter.hpp
+		time_interpreter.cpp
+		stl/discrete_time/online/cpp/ast_visitor.hpp
+		stl/discrete_time/online/cpp/ast_visitor.cpp
+		stl/discrete_time/online/cpp/interpreter.hpp
+		stl/discrete_time/online/cpp/interpreter.cpp
+		rtamt_stl_library/src/stl_combinatorial_binary_node.cpp
+		rtamt_stl_library/src/stl_not_node.cpp 
+	  	rtamt_stl_library/src/stl_once_node.cpp
+	  	rtamt_stl_library/src/stl_historically_node.cpp
+		rtamt_stl_library/src/stl_since_node.cpp
+		rtamt_stl_library/src/stl_once_bounded_node.cpp
+		rtamt_stl_library/src/stl_historically_bounded_node.cpp
+		rtamt_stl_library/src/stl_since_bounded_node.cpp
+		rtamt_stl_library/src/stl_precedes_bounded_node.cpp
+		rtamt_stl_library/src/stl_always_node.cpp
+		rtamt_stl_library/src/stl_eventually_node.cpp
+		rtamt_stl_library/src/stl_predicate_node.cpp
+        rtamt_stl_library/src/stl_addition_node.cpp
+        rtamt_stl_library/src/stl_subtraction_node.cpp
+        rtamt_stl_library/src/stl_multiplication_node.cpp
+        rtamt_stl_library/src/stl_division_node.cpp
+        rtamt_stl_library/src/stl_abs_node.cpp
+        rtamt_stl_library/src/stl_exp_node.cpp
+        rtamt_stl_library/src/stl_log_node.cpp
+        rtamt_stl_library/src/stl_ln_node.cpp
+        rtamt_stl_library/src/stl_pow_node.cpp
+        rtamt_stl_library/src/stl_negate_node.cpp
+        rtamt_stl_library/src/stl_sqrt_node.cpp
+        rtamt_stl_library/src/stl_rise_node.cpp
+        rtamt_stl_library/src/stl_fall_node.cpp
+        rtamt_stl_library/src/stl_constant_node.cpp
+        rtamt_stl_library/src/stl_previous_node.cpp
+		rtamt_stl_library/src/stl_var_node.cpp
+		rtamt_stl_library/include/stl_operator_type.h
+		rtamt_stl_library/include/stl_comp_op.h
+		rtamt_stl_library/include/stl_not_node.h 
+	  	rtamt_stl_library/include/stl_once_node.h
+	  	rtamt_stl_library/include/stl_historically_node.h
+		rtamt_stl_library/include/stl_since_node.h
+		rtamt_stl_library/include/stl_once_bounded_node.h
+		rtamt_stl_library/include/stl_historically_bounded_node.h
+		rtamt_stl_library/include/stl_since_bounded_node.h
+		rtamt_stl_library/include/stl_precedes_bounded_node.h
+		rtamt_stl_library/include/stl_always_node.h
+		rtamt_stl_library/include/stl_eventually_node.h
+		rtamt_stl_library/include/stl_predicate_node.h
+        rtamt_stl_library/include/stl_addition_node.h
+        rtamt_stl_library/include/stl_subtraction_node.h
+        rtamt_stl_library/include/stl_multiplication_node.h
+        rtamt_stl_library/include/stl_division_node.h
+        rtamt_stl_library/include/stl_abs_node.h
+        rtamt_stl_library/include/stl_exp_node.h
+        rtamt_stl_library/include/stl_log_node.h
+        rtamt_stl_library/include/stl_ln_node.h
+        rtamt_stl_library/include/stl_pow_node.h
+        rtamt_stl_library/include/stl_negate_node.h
+        rtamt_stl_library/include/stl_sqrt_node.h
+        rtamt_stl_library/include/stl_rise_node.h
+        rtamt_stl_library/include/stl_fall_node.h
+        rtamt_stl_library/include/stl_constant_node.h
+        rtamt_stl_library/include/stl_previous_node.h
+		rtamt_stl_library/include/stl_var_node.h
+)
+
+target_include_directories(${PROJECT_NAME}
+	PUBLIC 
+		${PROJECT_SOURCE_DIR}
+		${SYNTAX_DIR}
+		${BOOST_ROOT}
+)
+
+		##abstract_dense_time_offline_interpreter.hpp
+		##abstract_dense_time_offline_interpreter.cpp
+		##abstract_dense_time_online_interpreter.hpp
+		##abstract_dense_time_online_interpreter.cpp
+		##abstract_dense_time_online_operation.hpp
+		##abstract_dense_time_online_operation.cpp
+		##abstract_discrete_time_offline_interpreter.hpp
+		##abstract_discrete_time_offline_interpreter.cpp
+		##abstract_offline_interpreter.hpp
+		##abstract_offline_interpreter.cpp
+		##dense_time_interpreter.hpp
+		##dense_time_interpreter.cpp
