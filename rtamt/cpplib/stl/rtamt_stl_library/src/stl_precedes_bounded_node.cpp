@@ -46,10 +46,10 @@ double StlPrecedesBoundedNode::update(double left, double right) {
         double left; 
         double right;
         right = buffer[1][i];
-        left = std::numeric_limits<double>::infinity();
+        left = -std::numeric_limits<double>::infinity();
         int j;
         for(j=0; j < i; j++) {
-            left = std::min(left, buffer[0][j]);
+            left = std::max(left, buffer[0][j]);
         }
         out = std::max(out, std::min(left, right));
     }
