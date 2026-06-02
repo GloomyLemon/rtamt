@@ -10,5 +10,4 @@ class LnOperation(AbstractOnlineOperation):
 
     def update(self, sample):
         sample_result = math.log(sample)
-        print(sample_result)
         return sample_result

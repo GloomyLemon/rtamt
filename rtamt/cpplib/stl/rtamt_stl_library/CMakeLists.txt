@@ -3,7 +3,7 @@ project(rtamt_stl_library)
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
-	SHARED
+	STATIC
 		src/stl_combinatorial_binary_node.cpp
 		src/stl_not_node.cpp 
 	  	src/stl_once_node.cpp
@@ -22,14 +22,20 @@ add_library(${PROJECT_NAME}
         src/stl_division_node.cpp
         src/stl_abs_node.cpp
         src/stl_exp_node.cpp
+        src/stl_log_node.cpp
+        src/stl_ln_node.cpp
         src/stl_pow_node.cpp
+        src/stl_negate_node.cpp
         src/stl_sqrt_node.cpp
         src/stl_rise_node.cpp
         src/stl_fall_node.cpp
         src/stl_constant_node.cpp
         src/stl_previous_node.cpp
+		src/stl_var_node.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
-	PUBLIC ${PROJECT_SOURCE_DIR}/include
+	PUBLIC 
+		${PROJECT_SOURCE_DIR}/include
+		${BOOST_ROOT}
 )

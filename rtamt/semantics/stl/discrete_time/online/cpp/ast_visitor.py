@@ -1,5 +1,8 @@
 from rtamt.syntax.ast.visitor.stl.ast_visitor import StlAstVisitor
 
+import rtamt.lib.rtamt_stl_library_wrapper.load_dlls as loader
+loader.init_dlls()
+
 from rtamt.semantics.enumerations.comp_op import StlComparisonOperator as CompOp
 from rtamt.lib.rtamt_stl_library_wrapper.stl_combinatorial_binary_node import CombinatorialBinaryOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_comp_op import StlComparisonOperator
@@ -18,6 +21,9 @@ from rtamt.lib.rtamt_stl_library_wrapper.stl_since_node import SinceOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_abs_node import AbsOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_exp_node import ExpOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_pow_node import PowOperation
+from rtamt.lib.rtamt_stl_library_wrapper.stl_log_node import LogOperation
+from rtamt.lib.rtamt_stl_library_wrapper.stl_ln_node import LnOperation
+from rtamt.lib.rtamt_stl_library_wrapper.stl_negate_node import NegateOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_sqrt_node import SqrtOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_rise_node import RiseOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_fall_node import FallOperation
@@ -27,6 +33,7 @@ from rtamt.lib.rtamt_stl_library_wrapper.stl_always_node import AlwaysOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_eventually_node import EventuallyOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_previous_node import PreviousOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_constant_node import ConstantOperation
+from rtamt.lib.rtamt_stl_library_wrapper.stl_var_node import VariableOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_once_bounded_node import OnceBoundedOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_historically_bounded_node import HistoricallyBoundedOperation
 from rtamt.lib.rtamt_stl_library_wrapper.stl_since_bounded_node import SinceBoundedOperation
@@ -36,6 +43,12 @@ from rtamt.exception.exception import RTAMTException
 
 
 class StlDiscreteTimeOnlineAstVisitorCpp(StlAstVisitor):
+
+    def visitConstant(self, node, *args, **kwargs):
+        self.online_operator_dict[node.name] = ConstantOperation(node.val)
+
+    def visitVariable(self, node, *args, **kwargs):
+        self.online_operator_dict[node.name] = VariableOperation()
 
     def visitPredicate(self, node, *args, **kwargs):
         self.visitChildren(node, *args, **kwargs)
@@ -49,9 +62,22 @@ class StlDiscreteTimeOnlineAstVisitorCpp(StlAstVisitor):
         self.visitChildren(node, *args, **kwargs)
         self.online_operator_dict[node.name] = PowOperation()
 
+    def visitLog(self, node, *args, **kwargs):
+        self.visitChildren(node, *args, **kwargs)
+        self.online_operator_dict[node.name] = LogOperation()
+
+    def visitLn(self, node, *args, **kwargs):
+        self.visitChildren(node, *args, **kwargs)
+        self.online_operator_dict[node.name] = LnOperation()
+
     def visitExp(self, node, *args, **kwargs):
         self.visitChildren(node, *args, **kwargs)
         self.online_operator_dict[node.name] = ExpOperation()
+
+
+    def visitNegate(self, node, *args, **kwargs):
+        self.visitChildren(node, *args, **kwargs)
+        self.online_operator_dict[node.name] = NegateOperation()
 
     def visitSqrt(self, node, *args, **kwargs):
         self.visitChildren(node, *args, **kwargs)
