@@ -3,6 +3,7 @@
 using namespace stl_library;
 
 AbstractInterpreter::AbstractInterpreter(const PNode& n): ast(n) {}
+
 void AbstractInterpreter::set_ast(const PNode& n) {
     ast = n;
 }

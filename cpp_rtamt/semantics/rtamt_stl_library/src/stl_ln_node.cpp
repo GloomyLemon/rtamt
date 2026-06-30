@@ -1,5 +1,4 @@
 #include <rtamt_stl_library/include/stl_ln_node.h>
-#include <algorithm>
 #include <limits>
 #include <cmath>
 
@@ -22,6 +21,7 @@ double StlLnNode::update(double sample, double unused) {
     else {
         out = std::log(sample);
     }
+    //printf("Calculating ln(%f) = %f\n", sample, out);
 
     return sanitize(out);
 

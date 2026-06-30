@@ -5,7 +5,6 @@
 
 #include <ast/visitor/stl/ast_visitor.hpp>
 
-#include <iostream>
 #include "abstract_online_operation.hpp"
 #include <node/abstract_node.hpp>
 #include "time_interpreter.hpp"
@@ -26,7 +25,6 @@ namespace stl_library {
 
             return op->update(left_result, right_result);
         }
-
 
 
         double visitVariable(const PNode& node) {
@@ -272,7 +270,210 @@ namespace stl_library {
         }
     };
 
+    class DiscreteTimeResetVisitor : public StlAstVisitor {
+    public:
+        //DiscreteTimeOperatorVisitor() = delete;
+        DiscreteTimeResetVisitor() {}
+        double visitPredicate(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+
+
+        double visitVariable(const PNode& node) {
+            return 0;
+        }
+        double visitConstant(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitNot(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitDisjunction(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitConjunction(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitImplies(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitIff(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitXor(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitEventually(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitAlways(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitUntil(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitOnce(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitHistorically(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitSince(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitAbs(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitSqrt(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitExp(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitPow(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitLog(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitLn(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitAddition(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitSubtraction(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitMultiplication(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitDivision(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitNegate(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitRise(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitFall(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitPrevious(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitStrongPrevious(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitNext(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitStrongNext(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedAlways(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedEventually(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedHistorically(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedOnce(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedPrecedes(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedSince(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+        double visitTimedUntil(const PNode& node) {
+            auto* op = static_cast<AbstractOnlineOperation*>(node->getOperation());
+            op->reset();
+            return 0;
+        }
+    };
+
     class DiscreteTimeOnlineInterpreter : public AbstractDiscreteTimeInterpreter, public AbstractOnlineInterpreter {
+    private:
+        double prev_timestamp;
     protected:
         //DiscreteTimeOperatorVisitor operator_visitor;
 
@@ -284,6 +485,7 @@ namespace stl_library {
         double update(double timestamp, const DataSet& dataset);
         void reset();
         void set_variable_to_ast_from_dataset(const DataSet& p_dataset) override;
+        void set_ast(const PNode& n);
         //bool dataset_check(DataSet& p_dataset) override;
         //void set_variable_to_ast_from_dataset() override;
     };

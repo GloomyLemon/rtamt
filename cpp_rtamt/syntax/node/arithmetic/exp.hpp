@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma message("Including exp.hpp from: " __FILE__)
-
 #include<String>
 #include<vector>
 #include<memory>

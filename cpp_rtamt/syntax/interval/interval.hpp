@@ -17,7 +17,7 @@ namespace stl_library {
 
     public:
         Interval();
-        Interval(const double begin, const double end, const std::string begin_unit = "", const std::string end_unit = "");
+        Interval(const double begin, const double end, const std::string begin_unit = "s", const std::string end_unit = "s");
         double getBegin() { return begin; }
         double getEnd() { return end; }
         std::string getBeginUnit() { return begin_unit; }

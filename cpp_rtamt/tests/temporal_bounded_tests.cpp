@@ -1,5 +1,3 @@
-// file: temporal_ops_typed_tests.cpp
-
 #include <gtest/gtest.h>
 #include <cmath>
 #include <map>
@@ -39,9 +37,6 @@
 
 using namespace stl_library;
 
-// Typedefs come from your headers:
-//   using PNode   = std::shared_ptr<AbstractNode>;
-//   using DataSet = std::map<std::string, double>;
 using PNode = std::shared_ptr<AbstractNode>;
 using InputContext = DataSet;
 
@@ -247,7 +242,6 @@ TEST(BoundedTemporalUnaryExplicitTests, PreviousNodeCorrectness) {
 
 // =====================================================================
 // BINARY TEMPORAL — SINCE (UNBOUNDED)
-// NOTE: getName() for Since uses "since", per your format.
 // =====================================================================
 
 template<typename Op>
@@ -353,8 +347,6 @@ public:
     using Op = T;
 };
 
-// NOTE: If your actual classes are Stl*BoundedNode instead of Timed*Node,
-// replace the types below accordingly.
 using BoundedOps = ::testing::Types<
     TimedHistoricallyNode,
     TimedOnceNode,
@@ -432,14 +424,60 @@ TYPED_TEST(BoundedTemporalTests, IntervalStoredCorrectly) {
     }
 }
 
-// ---- 4) Evaluation: EXACT implementation semantics ----
-// Based on the update(...) loops you shared for bounded nodes.
+// ---- 4) Interval scaled correctly ----
+TYPED_TEST(BoundedTemporalTests, IntervalScaledCorrectly) {
+    // This test is only performed for TimedHistorically as the buffer constructions
+    // are similar for all bounded operators.
+
+    Interval itv(1, 2);
+    if constexpr (std::is_same_v<typename TestFixture::Op, TimedHistoricallyNode>) {
+        auto n = make_bounded_unary<typename TestFixture::Op>(itv);
+        DiscreteTimeOnlineInterpreter I(n);
+        I.set_sampling_period(500, "ms", 0.1);
+        I.set_ast(n);
+
+        std::vector<double> phi = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
+
+        std::vector<double> Hphi;
+
+        int begin = itv.getBegin() * 2;
+        int end = itv.getEnd() * 2;
+
+
+        for (int t = 0; t < static_cast<int>(phi.size()); ++t) {
+            Hphi.push_back(phi[t]);
+
+            InputContext ctx;
+            ctx["phi1"] = phi[t];
+
+            // time in 500ms increments!
+            double result = I.update(t * 500, ctx);
+            double exp = +std::numeric_limits<double>::infinity();
+
+            for (int tau = t - end; tau <= t - begin; ++tau) {
+                if (tau < 0) continue;
+                exp = std::min(exp, Hphi[tau]);
+            }
+
+            exp = +std::numeric_limits<double>::infinity();
+
+            for (int tau = t - end; tau <= t - begin; ++tau) {
+                if (tau < 0) continue;
+                exp = std::min(exp, Hphi[tau]);
+            }
+
+            EXPECT_EQ(result, exp);
+        }
+    }
+}
+
+// ---- 5) Evaluation: EXACT implementation semantics ----
 TYPED_TEST(BoundedTemporalTests, EvaluationMatchesImplementation) {
     Interval itv(2, 4);
 
     // Test inputs
-    std::vector<double> phi = { 1.0, -2.0, 5.0, -1.0, 4.0, -2.0, -2.0 };
-    std::vector<double> psi = { 0.3,  0.1, -0.4, 2.0, -3.0, -3.0, -2.0 };
+    std::vector<double> phi = { 1.0, -2.0, 5.0, -1.0, 4.0, 2.5, 3.0, 4.0, 2.0 };
+    std::vector<double> psi = { 0.3,  0.1, -0.4, 2.0, -3.0, -2.8, -2.0, 3.0, 5.0 };
 
     std::shared_ptr<AbstractNode> root;
 
@@ -514,24 +552,27 @@ TYPED_TEST(BoundedTemporalTests, EvaluationMatchesImplementation) {
         }
 
         else if constexpr (std::is_same_v<typename TestFixture::Op, TimedPrecedesNode>) {
+            exp = -std::numeric_limits<double>::infinity();
 
             int t = Hphi.size() - 1;
 
-            double right = Hpsi.back();
+            for (int i = 0; i <= end - begin; i++) {
+                int t_prime = t - i;
+                if (t_prime < 0) continue;
 
-            double left = -std::numeric_limits<double>::infinity();
+                double psi = Hpsi[t_prime];
 
-            // Clip window to available history
-            int start = t - begin;
-            int stop = std::max(0, start - (end - begin));
+                double phi_inf = std::numeric_limits<double>::infinity();
 
-            if (start >= 0) {
-                for (int k = start; k >= stop; --k) {
-                    left = std::max(left, Hphi[k]);
+                for (int j = 0; j <= end; j++) {
+                    int t_dd = t_prime - j;
+                    if (t_dd < 0) break;
+
+                    phi_inf = std::min(phi_inf, Hphi[t_dd]);
                 }
-            }
 
-            exp = std::min(left, right);
+                exp = std::max(exp, std::min(phi_inf, psi));
+            }
         }
 
         // ===== Comparison =====
@@ -542,5 +583,80 @@ TYPED_TEST(BoundedTemporalTests, EvaluationMatchesImplementation) {
         else {
             EXPECT_NEAR(got, exp, 1e-9);
         }
+    }
+}
+
+// ---- 6) Buffers cleared on reset ----
+TYPED_TEST(BoundedTemporalTests, BuffersClearedOnReset) {
+    Interval itv(2, 4);
+
+    // Test inputs
+    std::vector<double> phi = { 1.0, -2.0, 5.0, -1.0, 4.0, 2.5, 3.0, 4.0, 2.0 };
+    std::vector<double> psi = { 0.3,  0.1, -0.4, 2.0, -3.0, -2.8, -2.0, 3.0, 5.0 };
+
+    std::shared_ptr<AbstractNode> root;
+
+    if constexpr (std::is_same_v<typename TestFixture::Op, TimedHistoricallyNode>) {
+        root = make_bounded_unary<TimedHistoricallyNode>(itv);
+    }
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedOnceNode>) {
+        root = make_bounded_unary<TimedOnceNode>(itv);
+    }
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedSinceNode>) {
+        root = make_bounded_binary<TimedSinceNode>(itv);
+    }
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedPrecedesNode>) {
+        root = make_bounded_binary<TimedPrecedesNode>(itv);
+    }
+
+    DiscreteTimeOnlineInterpreter I(root);
+    I.set_ast(root);
+
+    std::vector<double> Hphi;
+    std::vector<double> Hpsi;
+
+    for (int t = 0; t < static_cast<int>(phi.size()); ++t) {
+        Hphi.push_back(phi[t]);
+        Hpsi.push_back(psi[t]);
+
+        InputContext ctx;
+        ctx["phi1"] = phi[t];
+        ctx["phi2"] = psi[t];
+
+        double got = I.update(t, ctx);
+    }
+
+    I.reset();
+
+    double got; // test result 
+    if constexpr (std::is_same_v<typename TestFixture::Op, TimedHistoricallyNode>) {
+        InputContext ctx;
+        ctx["phi1"] = std::numeric_limits<double>::infinity();
+        got = I.update(0, ctx);
+
+        EXPECT_TRUE(std::isinf(got) && got > 0);
+    } 
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedOnceNode>) {
+        InputContext ctx;
+        ctx["phi1"] = -std::numeric_limits<double>::infinity();
+        got = I.update(0, ctx);
+
+        EXPECT_TRUE(std::isinf(got) && got < 0);
+    }
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedSinceNode>) {
+        InputContext ctx;
+        ctx["phi1"] = std::numeric_limits<double>::infinity();
+        ctx["phi2"] = -std::numeric_limits<double>::infinity();
+        got = I.update(0, ctx);
+
+        EXPECT_TRUE(std::isinf(got) && got < 0);
+    }
+    else if constexpr (std::is_same_v<typename TestFixture::Op, TimedPrecedesNode>) {
+        InputContext ctx;
+        ctx["phi1"] = std::numeric_limits<double>::infinity();
+        ctx["phi2"] = -std::numeric_limits<double>::infinity();
+        got = I.update(0, ctx);
+
+        EXPECT_TRUE(std::isinf(got) && got < 0);
     }
 }

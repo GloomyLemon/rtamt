@@ -16,7 +16,10 @@ void StlPowNode::reset() {
 double StlPowNode::update(double base, double exponent) {
     double out;
     
-    if (base <= 0.0 && std::floor(exponent) != exponent) {
+
+	constexpr double eps = 1e-9;
+
+	if (base <= 0.0 && std::abs(std::floor(exponent) - exponent) > eps)  {
         out = -std::numeric_limits<double>::infinity();
     }
     else {

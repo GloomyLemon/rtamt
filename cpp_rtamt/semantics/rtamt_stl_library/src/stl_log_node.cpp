@@ -16,7 +16,11 @@ void StlLogNode::reset() {
 double StlLogNode::update(double sample, double base) {
     double out;
 
-    if (sample <= 0.0 || base <= 0.0 || base == 1.0) {
+
+	const double eps = 1e-9;
+
+	if (sample <= 0.0 || base <= 0.0 || std::fabs(base - 1.0) < eps) {
+
         out = -std::numeric_limits<double>::infinity();
     }
     else {

@@ -51,6 +51,8 @@
 
 using namespace stl_library;
 
+StlDiscreteTimeOnlineAstVisitor::StlDiscreteTimeOnlineAstVisitor(double period) : StlAstVisitor(), sampling_period(period) {};
+
 double StlDiscreteTimeOnlineAstVisitor::visitPredicate(const PNode& node) {
     auto pred = std::static_pointer_cast<PredicateNode>(node);
 
@@ -310,9 +312,11 @@ double StlDiscreteTimeOnlineAstVisitor::visitSince(const PNode& node) {
 double StlDiscreteTimeOnlineAstVisitor::visitTimedSince(const PNode& node) {
     auto tn = std::dynamic_pointer_cast<TimedSinceNode>(node);
 
+    auto itv = time_unit_transformer(tn->getInterval());
+
     auto op = std::make_unique<StlSinceBoundedNode>(
-        tn->getInterval().getBegin(),
-        tn->getInterval().getEnd()
+        itv.first,
+        itv.second
     );
 
     node->setOperation(op.get());
@@ -324,9 +328,11 @@ double StlDiscreteTimeOnlineAstVisitor::visitTimedSince(const PNode& node) {
 double StlDiscreteTimeOnlineAstVisitor::visitTimedOnce(const PNode& node) {
     auto tn = std::dynamic_pointer_cast<TimedOnceNode>(node);
 
+    auto itv = time_unit_transformer(tn->getInterval());
+
     auto op = std::make_unique<StlOnceBoundedNode>(
-        tn->getInterval().getBegin(),
-        tn->getInterval().getEnd()
+        itv.first,
+        itv.second
     );
 
     node->setOperation(op.get());
@@ -339,9 +345,11 @@ double StlDiscreteTimeOnlineAstVisitor::visitTimedOnce(const PNode& node) {
 double StlDiscreteTimeOnlineAstVisitor::visitTimedHistorically(const PNode& node) {
     auto tn = std::dynamic_pointer_cast<TimedHistoricallyNode>(node);
 
+    auto itv = time_unit_transformer(tn->getInterval());
+
     auto op = std::make_unique<StlHistoricallyBoundedNode>(
-        tn->getInterval().getBegin(),
-        tn->getInterval().getEnd()
+        itv.first,
+        itv.second
     );
 
     node->setOperation(op.get());
@@ -354,13 +362,44 @@ double StlDiscreteTimeOnlineAstVisitor::visitTimedHistorically(const PNode& node
 double StlDiscreteTimeOnlineAstVisitor::visitTimedPrecedes(const PNode& node) {
     auto tn = std::dynamic_pointer_cast<TimedPrecedesNode>(node);
 
+    auto itv = time_unit_transformer(tn->getInterval());
+
     auto op = std::make_unique<StlPrecedesBoundedNode>(
-        tn->getInterval().getBegin(),
-        tn->getInterval().getEnd()
+        itv.first,
+        itv.second
     );
 
     node->setOperation(op.get());
     operations.push_back(std::move(op));
 
     return visitChildren(node);
+}
+
+#include <iostream>
+std::pair<int, int> StlDiscreteTimeOnlineAstVisitor::time_unit_transformer(Interval& itv) {
+    double b = itv.getBegin();
+    double e = itv.getEnd();
+    std::string b_unit = itv.getBeginUnit();
+    std::string e_unit = itv.getEndUnit();
+
+    b = b * units[b_unit];
+    e = e * units[e_unit];
+
+    double sp = sampling_period;
+
+    b = b / sp;
+    e = e / sp;
+
+    if (std::fmod(b, 1) > 0) {
+        std::cout << "The operator bound must be a multiple of the sampling period";
+    }
+    if (std::fmod(e, 1) > 0) {
+        std::cout << "The operator bound must be a multiple of the sampling period";
+    }
+
+    int bint = int(b);
+    int eint = int(e);
+
+    std::pair<int, int> result(bint, eint);
+    return result;
 }

@@ -1,9 +1,6 @@
 #include <rtamt_stl_library/include/stl_historically_bounded_node.h>
-#include <algorithm>
 #include <limits>
-
-#include <boost/circular_buffer.hpp>
-#include <boost/circular_buffer/base.hpp>
+#include <deque>
 
 using namespace stl_library;
 
@@ -12,10 +9,11 @@ using namespace stl_library;
 struct StlHistoricallyBoundedNode::Impl{
     int begin;
     int end;
-    boost::circular_buffer<double> buffer;
+    int window_size;
+    std::deque<double> buffer;
 
     Impl(int b, int e)
-        : begin(b), end(e), buffer(end+1) {}
+        : begin(b), end(e), window_size(end + 1), buffer(window_size) {}
 };
 
 StlHistoricallyBoundedNode::~StlHistoricallyBoundedNode() {
@@ -25,22 +23,16 @@ StlHistoricallyBoundedNode::~StlHistoricallyBoundedNode() {
 
 // Initialize previous and current value
 StlHistoricallyBoundedNode::StlHistoricallyBoundedNode(int begin, int end) : impl(new Impl(begin, end)) {
-    
-    int i;
-    for(i=0; i <= impl->end; i++) {
-        double s;
-        s = std::numeric_limits<double>::infinity();
-        impl->buffer.push_back(s);
-    }
+    reset();
 }
 
 void StlHistoricallyBoundedNode::reset() {
 
-    int i;
-    for(i=0; i <= impl->end; i++) {
+    for(int i=0; i <= impl->end; i++) {
         double s;
         s = std::numeric_limits<double>::infinity();
         impl->buffer.push_back(s);
+        impl->buffer.pop_front();
     }
 }
 
@@ -49,10 +41,11 @@ double StlHistoricallyBoundedNode::update(double sample, double rsample) {
 
 
     impl->buffer.push_back(sample);
+    impl->buffer.pop_front();
+
     out = std::numeric_limits<double>::infinity();
-    int i;
-    for (i=0; i <= impl->end - impl->begin; i++) {
-        out = std::min(out, impl->buffer[i]);
+    for (int i = impl->begin; i <= impl->end; i++) {
+        out = std::min(out, impl->buffer.at(impl->buffer.size() - 1 - i));
     }
     return out;
 }

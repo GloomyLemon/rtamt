@@ -213,7 +213,7 @@ TYPED_TEST(UnaryOpTests, DoubleNegationIfApplicable) {
 
         for (double a : { -5, -1, 0, 1, 7 }) {
             InputContext ctx; ctx["phi1"] = a;
-            EXPECT_NEAR(I.update(0, ctx), J.update(0, ctx), 1e-9) << "a=" << a;
+            EXPECT_NEAR(I.update(0, ctx), J.update(1, ctx), 1e-9) << "a=" << a;
         }
     }
     else {

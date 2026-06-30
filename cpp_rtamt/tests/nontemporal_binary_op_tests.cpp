@@ -280,7 +280,7 @@ TYPED_TEST(BinaryOpTests, CommutativityCheck) {
         i1.set_ast(op_ab);
         i2.set_ast(op_ba);
 
-        EXPECT_NEAR(i1.update(0, input), i2.update(0, input), 1e-9)
+        EXPECT_NEAR(i1.update(0, input), i2.update(1, input), 1e-9)
             << "Commutativity failed for " << Traits::name;
     }
     else {

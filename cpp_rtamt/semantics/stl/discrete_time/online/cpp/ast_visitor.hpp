@@ -3,6 +3,7 @@
 #include <node/abstract_node.hpp>
 #include <ast/visitor/stl/ast_visitor.hpp>
 #include <abstract_online_operation.hpp>
+#include <interval/interval.hpp>
 
 #include <map>
 #include <utility>
@@ -12,9 +13,19 @@ namespace stl_library {
     class StlDiscreteTimeOnlineAstVisitor : public StlAstVisitor {
     private:
         std::vector<std::unique_ptr<AbstractOnlineOperation>> operations;
+        std::pair<int, int> time_unit_transformer(Interval& itv);
+        double sampling_period;
+
+        std::map<std::string, double> units {
+            {"s", 1000000000.0},
+            {"ms", 1000000.0},
+            {"us", 1000.0},
+            {"ns", 1.0}
+        };
+
 
     public:
-        //StlDiscreteTimeOnlineAstVisitor();
+        StlDiscreteTimeOnlineAstVisitor(double period = 1000000000);
         //double visit(const PNode& node) override;
         double visitPredicate(const PNode& node);
         double visitVariable(const PNode& node);
